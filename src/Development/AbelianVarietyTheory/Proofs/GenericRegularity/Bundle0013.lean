@@ -292,7 +292,7 @@ theorem exists_chart_genPt : ReciprocityTheory.ChartRestriction.G.Out.SecTwistSt
     have := t₀.act.hom a
     (hb.2 _ (isTangent_comp_hom (hb.1 j) _)).exists
   choose r hr using ex
-  refine ⟨⟨U, hU, hW U hxU (hUW.trans inf_le_left), _, res_mem_secOn _ (Y.t.G.hom.preimage_mono hUV) hθ, nz', n, v₀,
+  refine ⟨⟨U, hU, hW U hxU (hUW.trans inf_le_left), _, GlobalTheory.ModelChart.res_mem_secOn _ (Y.t.G.hom.preimage_mono hUV) hθ, nz', n, v₀,
     fun a i j => r a j i, fun R' _ f t' m => ?_⟩, hxU⟩
   obtain ⟨v', hv', hb'⟩ := hv R' f t'.G m.φ m.cart
   refine ⟨v', hv', hb', fun a j => ?_⟩
