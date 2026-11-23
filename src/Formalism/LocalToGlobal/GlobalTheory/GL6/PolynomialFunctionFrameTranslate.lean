@@ -80,7 +80,7 @@ theorem diamond_value_root_of_unity (Tf : FormsTied D u) (hC : ChiFin Tf) (v : (
       ∀ (x : ((D.fm u).lat 0).V) z, (D.fm u).emb 0 (t2sRv v a x) c z =
         D.what₂.embLL r * (D.fm u).emb 0 x ((D.fm u).dil 0 v a c)
           ((Tf.val 0 (Nat.zero_le _)).eY.symm
-            (frameTranslate (embT D) (fun τ x => embedding_conj_compat D τ x) γ hγ ((Tf.val 0 (Nat.zero_le _)).eY z))) := by
+            (frameTranslate (Formalism.L2.Forms.embT D) (fun τ x => embedding_conj_compat D τ x) γ hγ ((Tf.val 0 (Nat.zero_le _)).eY z))) := by
   obtain ⟨k, hk, δ, hδ⟩ := diamond_elements_exist_all Tf 0 (Nat.zero_le _) v a
   have hcl := (Tf.val 0 (Nat.zero_le _)).dil v a k hk c δ hδ
   obtain ⟨hh, hhH, κ, hκK, e⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 hcl
@@ -100,7 +100,7 @@ theorem diamond_value_root_of_unity (Tf : FormsTied D u) (hC : ChiFin Tf) (v : (
   have hAd := (Submodule.mem_inf.1 hgA).1
   rw [t2sRv_spec, (D.fm u).rhoT_dil, hgAφ, (Tf.val 0 (Nat.zero_le _)).dilT v a k hk c δ hδ gA hAd]
   beta_reduce
-  rw [adelic_value_translate (Tf.cls 0 (Nat.zero_le _)).lev (embT D) (fun τ x => embedding_conj_compat D τ x) hAd g hgU _ _
+  rw [adelic_value_translate (Tf.cls 0 (Nat.zero_le _)).lev (Formalism.L2.Forms.embT D) (fun τ x => embedding_conj_compat D τ x) hAd g hgU _ _
     ⟨κ.1, hκ⟩ hx, hr, Equiv.apply_symm_apply]
 
 end Transport
@@ -121,7 +121,7 @@ theorem at_infinity_matrix_map (γ : GL (Fin (D.R.N 0)) D.host.E) (s : D.what₂
   simp [t2iM, atInf, embS]
 
 theorem at_infinity_matrix_embedding (γ : GL (Fin (D.R.N 0)) D.host.E) (τ : D.what₂.Tau) :
-    (t2iM γ τ).map D.what₂.embLL = atInf (embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) τ := by
+    (t2iM γ τ).map D.what₂.embLL = atInf (Formalism.L2.Forms.embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) τ := by
   ext i j
   simp [t2iM, atInf, bwA_embT_eq]
 
@@ -132,31 +132,31 @@ def t2iP (γ : GL (Fin (D.R.N 0)) D.host.E) (r : D.what₂.LL)
 
 theorem polynomial_function_frame_translate (γ : GL (Fin (D.R.N 0)) D.host.E)
     (hγ : γ ∈ UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _)))
-    (P : MvPolynomial (D.what₂.Tau × Fin (D.R.N 0) × Fin (D.R.N 0)) ℂ) (y : Frames (gramC (gramN D 0 (Nat.zero_le _)) (embT D))) :
-    fnOf _ (shiftOf (lamT u 0)) 1 P (frameTranslate (embT D) (fun τ x => embedding_conj_compat D τ x) γ hγ y) =
-      fnOf _ (shiftOf (lamT u 0)) (atInf (embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E)) P y := by
+    (P : MvPolynomial (D.what₂.Tau × Fin (D.R.N 0) × Fin (D.R.N 0)) ℂ) (y : Frames (gramC (gramN D 0 (Nat.zero_le _)) (Formalism.L2.Forms.embT D))) :
+    fnOf _ (shiftOf (lamT u 0)) 1 P (frameTranslate (Formalism.L2.Forms.embT D) (fun τ x => embedding_conj_compat D τ x) γ hγ y) =
+      fnOf _ (shiftOf (lamT u 0)) (atInf (Formalism.L2.Forms.embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E)) P y := by
   simp only [fnOf, LinearMap.coe_mk, AddHom.coe_mk, frameTranslate, Pi.one_apply, Matrix.one_mul]
 
 theorem polynomial_rep_translate_rho (γ : GL (Fin (D.R.N 0)) D.host.E)
     (hγ : γ ∈ UJ (sigD D : D.host.E →+* D.host.E) (gramN D 0 (Nat.zero_le _))) (r : D.what₂.LL)
     (P : MvPolynomial (D.what₂.Tau × Fin (D.R.N 0) × Fin (D.R.N 0)) D.what₂.LL)
-    (y : Frames (gramC (gramN D 0 (Nat.zero_le _)) (embT D))) :
+    (y : Frames (gramC (gramN D 0 (Nat.zero_le _)) (Formalism.L2.Forms.embT D))) :
     D.what₂.embLL r * fnOf _ (shiftOf (lamT u 0)) 1 (MvPolynomial.map D.what₂.embLL P)
-        (frameTranslate (embT D) (fun τ x => embedding_conj_compat D τ x) γ hγ y) =
+        (frameTranslate (Formalism.L2.Forms.embT D) (fun τ x => embedding_conj_compat D τ x) γ hγ y) =
       fnOf _ (shiftOf (lamT u 0)) 1 (MvPolynomial.map D.what₂.embLL (t2iP (u := u) γ r P)) y := by
   rw [polynomial_function_frame_translate]
-  have h1 := fnOf_mul (gramC (gramN D 0 (Nat.zero_le _)) (embT D)) (shiftOf (lamT u 0))
-    (atInf (embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E)) 1 (MvPolynomial.map D.what₂.embLL P)
+  have h1 := fnOf_mul (gramC (gramN D 0 (Nat.zero_le _)) (Formalism.L2.Forms.embT D)) (shiftOf (lamT u 0))
+    (atInf (Formalism.L2.Forms.embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E)) 1 (MvPolynomial.map D.what₂.embLL P)
   simp only [Pi.one_apply, Matrix.mul_one] at h1
-  have h3 : (fun τ => (t2iM γ τ).map D.what₂.embLL) = atInf (embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) :=
+  have h3 : (fun τ => (t2iM γ τ).map D.what₂.embLL) = atInf (Formalism.L2.Forms.embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) :=
     funext fun τ => at_infinity_matrix_embedding γ τ
   have h4 : ∀ τ, D.what₂.embLL ((t2iM γ τ).det ^ shiftOf (lamT u 0) τ) =
-      (atInf (embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) τ).det ^ shiftOf (lamT u 0) τ := by
+      (atInf (Formalism.L2.Forms.embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) τ).det ^ shiftOf (lamT u 0) τ := by
     intro τ
     rw [map_zpow₀, RingHom.map_det, RingHom.mapMatrix_apply, at_infinity_matrix_embedding]
   have hmap : MvPolynomial.map D.what₂.embLL (t2iP (u := u) γ r P) =
-      (D.what₂.embLL r * ∏ τ, (atInf (embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) τ).det ^
-        shiftOf (lamT u 0) τ) • subP (atInf (embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E))
+      (D.what₂.embLL r * ∏ τ, (atInf (Formalism.L2.Forms.embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) τ).det ^
+        shiftOf (lamT u 0) τ) • subP (atInf (Formalism.L2.Forms.embT D) (γ : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E))
           (MvPolynomial.map D.what₂.embLL P) := by
     rw [t2iP, (MvPolynomial.map D.what₂.embLL).map_mul, MvPolynomial.map_C, substitution_polynomial_map, h3,
       MvPolynomial.smul_eq_C_mul, D.what₂.embLL.map_mul, map_prod]
